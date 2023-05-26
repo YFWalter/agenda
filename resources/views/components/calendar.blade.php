@@ -96,8 +96,8 @@
     </div>
 
     <script>
-        const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const MONTH_NAMES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        const DAYS = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'];
 
         function app() {
             return {
@@ -105,30 +105,13 @@
                 year: '',
                 no_of_days: [],
                 blankdays: [],
-                days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                days: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
 
                 events: [
-                    {
-                        event_date: new Date(2020, 3, 1),
-                        event_title: "April Fool's Day",
-                        event_theme: 'blue'
-                    },
-
-                    {
-                        event_date: new Date(2020, 3, 10),
-                        event_title: "Birthday",
-                        event_theme: 'red'
-                    },
-
-                    {
-                        event_date: new Date(2020, 3, 16),
-                        event_title: "Upcoming Event",
-                        event_theme: 'green'
-                    }
                 ],
                 event_title: '',
                 event_date: '',
-                event_theme: 'blue',
+                event_theme: 'red',
 
                 themes: [
                     {

@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+        <title>{{ config('app.name', 'Laravel') }} {{ isset($title) ? " - {$title}" : "" }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -28,6 +30,14 @@
                         {{ $header }}
                     </div>
                 </header>
+            @endif
+            
+            @if (session()->has('impersonate'))
+                <div class="max-w-7xl mt-5 mx-auto sm:px-6 lg:px-8">
+                    <div class="text-center px-4 py-3 rounded shadow-lg bg-indigo-500 text-white">
+                        Has iniciado sesión como el usuario {{ auth()->user()->name }}. <a href="{{ route('impersonate.out') }}" class="font-bold">Volver a mi usuario &rarr;</a>
+                    </div>
+                </div>
             @endif
 
             <!-- Page Content -->

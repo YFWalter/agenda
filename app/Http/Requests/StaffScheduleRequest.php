@@ -2,13 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Business\OpeningHourChecker;
-use App\Business\StaffServiceChecker;
-use App\Business\StaffAvailabilityChecker;
-use App\Business\ClientAvailabilityChecker;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MyScheduleRequest extends FormRequest
+class StaffScheduleRequest extends FormRequest
 {
     use ManageReservationRules;
     /**
@@ -29,10 +25,6 @@ class MyScheduleRequest extends FormRequest
         return [
             'from.date' => 'required|date_format:Y-m-d|after_or_equal:today',
             'from.time' => 'required|date_format:H:i',
-            'staff_user_id' => 'required|exists:users,id',
-            'service_id' => 'required|exists:services,id',
         ];
     }
-
-    
 }

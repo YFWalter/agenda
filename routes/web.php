@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MyScheduleController;
+use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\OpeningHoursController;
 use App\Http\Controllers\UsersServicesController;
 use App\Http\Controllers\StaffSchedulerController;
@@ -47,9 +48,21 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:staff')->group(function () {
         Route::get('/staff-scheduler', [StaffSchedulerController::class, 'index'])
             ->name('staff-scheduler.index');
+        Route::get('/staff-scheduler/{scheduler}/edit', [StaffSchedulerController::class, 'edit'])
+            ->name('staff-scheduler.edit');
+        Route::put('/staff-scheduler/{scheduler}', [StaffSchedulerController::class, 'update'])
+            ->name('staff-scheduler.update');
+        Route::delete('/staff-scheduler/{scheduler}', [StaffSchedulerController::class, 'destroy'])
+            ->name('staff-scheduler.destroy');
     });
 
+    Route::get('/impersonate/out', [ImpersonateController::class, 'out'])
+            ->name('impersonate.out');
+
     Route::middleware('role:admin')->group(function () {
+        Route::get('/impersonate/{user}', [ImpersonateController::class, 'in'])
+            ->name('impersonate.in');
+
         Route::get('/users',[UserController::class, 'index'])
             ->name('users.index');
         Route::get('/create',[UserController::class, 'create'])

@@ -32,7 +32,7 @@
                                 <x-select id="service_id" class="block mt-1 w-full" name="service_id">
                                     <option value="">--Selecciona el servicio--</option>
                                     @foreach ($services as $service)
-                                        <option value="{{$service->id}}"> {{$service->name}} </option>
+                                        <option value="{{$service->id}}" {{old('service_id') == $service->id ? 'selected' : ''}}> {{$service->name}} </option>
                                     @endforeach
                                 </x-select>
                             </div>
@@ -43,7 +43,7 @@
                                     <x-select id="staff_user_id" class="block mt-1 w-full" name="staff_user_id">
                                         <option value="">--Selecciona quien te atendera--</option>
                                         @foreach ($staffUsers as $user)
-                                            <option value="{{$user->id}}"> {{$user->name}} </option>
+                                            <option value="{{$user->id}}" {{old('staff_user_id') == $user->id ? 'selected' : ''}}> {{$user->name}} </option>
                                         @endforeach
                                     </x-select>
                             </div>

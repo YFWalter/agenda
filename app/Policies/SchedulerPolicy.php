@@ -35,29 +35,38 @@ class SchedulerPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Scheduler $scheduler): bool
+    public function update(User $user, Scheduler $scheduler)
     {
-        if($scheduler->client_user_id != $user->id){
+        // Si queremos hacer que el super-admin reagende una cita cambiamos la condicion > 24, return true.
+        if($scheduler->from->diffInHours() < 24){
             return false;
         }
+        
+        if(($scheduler->client_user_id == $user->id) OR ($scheduler->staff_user_id == $user->id)){
+            return true;
+        }
 
-        return true;
+        return null;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Scheduler $scheduler): bool
+    public function delete(User $user, Scheduler $scheduler)
     {
         if($scheduler->to->isPast()){
             return false;
         }
-
-        if($scheduler->client_user_id != $user->id){
+        
+        if ($scheduler->from->diffInHours() < 24) {
             return false;
         }
 
-        return true;
+        if(($scheduler->client_user_id == $user->id) OR ($scheduler->staff_user_id == $user->id)){
+            return true;
+        }
+
+        return null;
     }
 
     /**

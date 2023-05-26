@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Franco',
             'email' => 'franco@example.com'
         ]);
-        $userStaff->assignRole('staff');
+        $userStaff->assignRole('staff','client');
         $this->call(OpeningHoursSeeder::class);
         $this->call(ServicesSeeder::class);
         // \App\Models\User::factory()->create([
