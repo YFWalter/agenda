@@ -4,14 +4,45 @@
       <div class="pl-4 flex items-center">
         <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
           <!--Icon from: http://www.potlabicons.com/ -->
-          <svg class="h-8 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.005 512.005">
+          {{-- <svg class="h-8 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.005 512.005">
             <rect fill="#2a2a31" x="16.539" y="425.626" width="479.767" height="50.502" transform="matrix(1,0,0,1,0,0)" />
             <path
               class="plane-take-off"
               d=" M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "
             />
+          </svg> --}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <style>
+              .rotate-right {
+                animation: rotate-right 1s cubic-bezier(1, -0.01, 0.13, 1.15) infinite alternate-reverse both;
+                transform-origin: top center;
+              }
+
+              @keyframes rotate-right {
+                0% {
+                  transform: rotate(0);
+                }
+
+                25% {
+                  transform: rotate(10deg);
+                }
+
+                50 {
+                  transform: rotate(0deg);
+                }
+
+                100% {
+                  transform: rotate(-10deg);
+                }
+              }
+            </style>
+            <g class="rotate-right">
+              <path stroke="#265BFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.5 7.307h5" />
+              <path stroke="#0A0A30" stroke-width="1.5"
+                d="M9 5.5A1.5 1.5 0 0110.5 4h3A1.5 1.5 0 0115 5.5v11.3a1.5 1.5 0 01-.54 1.152l-1.5 1.249a1.5 1.5 0 01-1.92 0l-1.5-1.249A1.5 1.5 0 019 16.8V5.5z" />
+            </g>
           </svg>
-          LANDING
+          MiAgenda
         </a>
       </div>
       <div class="block lg:hidden pr-4">
