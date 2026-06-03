@@ -1,5 +1,5 @@
 <!--Nav-->
-<nav id="header" class="fixed w-full z-30 top-0 text-white">
+<nav id="header" class="fixed w-full z-30 top-8 text-white">
     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
       <div class="pl-4 flex items-center">
         <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
@@ -11,7 +11,9 @@
               d=" M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "
             />
           </svg> --}}
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          {{-- <svg xmlns="http://www.w3.org/2000/svg " width="24" height="24" fill="none" viewBox="0 0 24 24"> --}}
+          <svg xmlns="http://www.w3.org/2000/svg " class="inline" width="50" height="50" fill="none" viewBox="0 0 30 30">
+            <rect fill="#2a2a31" x="16.539" y="425.626" width="479.767" height="50.502" transform="matrix(1,0,0,1,0,0)" />
             <style>
               .rotate-right {
                 animation: rotate-right 1s cubic-bezier(1, -0.01, 0.13, 1.15) infinite alternate-reverse both;
@@ -42,7 +44,7 @@
                 d="M9 5.5A1.5 1.5 0 0110.5 4h3A1.5 1.5 0 0115 5.5v11.3a1.5 1.5 0 01-.54 1.152l-1.5 1.249a1.5 1.5 0 01-1.92 0l-1.5-1.249A1.5 1.5 0 019 16.8V5.5z" />
             </g>
           </svg>
-          MiAgenda
+          MiAgenda<span class="align-middle ml-2 text-xs font-bold uppercase tracking-wide bg-white text-gray-700 rounded-full px-2 py-1">Demo</span>
         </a>
       </div>
       <div class="block lg:hidden pr-4">
@@ -59,36 +61,34 @@
             <a class="inline-block py-2 px-4 text-black font-bold no-underline" href="/">Inicio</a>
           </li>
           <li class="mr-3">
-            <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/about">Nosotros</a>
-          </li>
-          <li class="mr-3">
-            <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/contact">Contacto</a>
+            <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/about">Acerca de</a>
           </li>
         </ul>
     </div>
     @auth
+    <div class="flex items-center justify-center mx-auto lg:mx-0 mt-4 lg:mt-0">
     <a
         href="/dashboard"
-        id="navAction"
-        class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+        class="navAction hover:underline bg-white text-gray-800 font-bold rounded-full py-2 px-6 lg:py-4 lg:px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out whitespace-nowrap"
     >
         Mi Cuenta
     </a>
-    @else   
+    </div>
+    @else
+    <div class="flex items-center justify-center gap-2 sm:gap-3 mx-auto lg:mx-0 mt-4 lg:mt-0">
     <a
         href="/login"
-        id="navAction"
-        class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+        class="navAction hover:underline bg-white text-gray-800 font-bold rounded-full py-2 px-5 lg:py-4 lg:px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out whitespace-nowrap"
     >
         Login
     </a>
     <a
         href="/register"
-        id="navAction"
-        class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+        class="navAction hover:underline bg-white text-gray-800 font-bold rounded-full py-2 px-5 lg:py-4 lg:px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out whitespace-nowrap"
     >
         Regístrate
     </a>
+    </div>
     @endauth
     
     </div>

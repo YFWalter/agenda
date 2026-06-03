@@ -1,21 +1,62 @@
-<div class="pt-24">
+<div class="pt-28">
     <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
     <!--Left Col-->
     <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-        <p class="uppercase tracking-loose w-full">What business are you?</p>
+        <p class="uppercase tracking-loose w-full">Reserva de citas online</p>
         <h1 class="my-4 text-5xl font-bold leading-tight">
-        Main Hero Message to sell yourself!
+        Tu próxima cita, sin llamadas ni esperas
         </h1>
         <p class="leading-normal text-2xl mb-8">
-        Sub-hero message, not too long and not too short. Make it just right!
+        Elige tu servicio, el día y la hora que prefieras. MiAgenda te muestra la disponibilidad real de nuestro equipo y confirma tu cita al instante.
         </p>
-        <button class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-        Subscribe
-        </button>
+        <div class="w-full flex flex-col sm:flex-row items-center md:items-start gap-4">
+            @auth
+            <a href="{{ url('/dashboard') }}" class="mx-auto sm:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                Ir a mi agenda
+            </a>
+            @else
+            <a href="{{ url('/register') }}" class="mx-auto sm:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                Reservar ahora
+            </a>
+            <a href="{{ url('/login') }}" class="mx-auto sm:mx-0 hover:underline border-2 border-white text-white font-bold rounded-full py-4 px-8 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                Iniciar sesión
+            </a>
+            @endauth
+        </div>
     </div>
     <!--Right Col-->
     <div class="w-full md:w-3/5 py-6 text-center">
-        <img class="w-full md:w-4/5 z-50" src="hero.png" />
+        <!-- Ilustración: tarjeta de cita confirmada -->
+        <svg class="w-full md:w-4/5 mx-auto z-50" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cita confirmada en el calendario">
+            <defs>
+                <linearGradient id="hero-accent" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#36d1dc" />
+                    <stop offset="1" stop-color="#5b86e5" />
+                </linearGradient>
+            </defs>
+            <!-- Tarjeta principal -->
+            <rect x="70" y="50" width="340" height="260" rx="20" fill="#ffffff" />
+            <rect x="70" y="50" width="340" height="64" rx="20" fill="url(#hero-accent)" />
+            <rect x="70" y="94" width="340" height="20" fill="url(#hero-accent)" />
+            <!-- Aros del calendario -->
+            <rect x="130" y="36" width="14" height="34" rx="7" fill="#2a2a31" />
+            <rect x="230" y="36" width="14" height="34" rx="7" fill="#2a2a31" />
+            <rect x="330" y="36" width="14" height="34" rx="7" fill="#2a2a31" />
+            <!-- Encabezado: mes -->
+            <text x="100" y="92" font-family="Source Sans Pro, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Tu cita</text>
+            <!-- Filas de horarios -->
+            <rect x="100" y="140" width="180" height="14" rx="7" fill="#e2e8f0" />
+            <rect x="100" y="168" width="240" height="14" rx="7" fill="#e2e8f0" />
+            <!-- Slot seleccionado -->
+            <rect x="100" y="200" width="280" height="48" rx="12" fill="#eef2ff" stroke="url(#hero-accent)" stroke-width="2" />
+            <circle cx="128" cy="224" r="14" fill="url(#hero-accent)" />
+            <path d="M121 224 l5 5 l9 -10" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="156" y="214" width="120" height="10" rx="5" fill="#5b86e5" />
+            <rect x="156" y="230" width="80" height="8" rx="4" fill="#94a3b8" />
+            <!-- Botón confirmar -->
+            <rect x="100" y="264" width="280" height="30" rx="15" fill="url(#hero-accent)" />
+            <text x="240" y="284" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Cita confirmada</text>
+        </svg>
     </div>
     </div>
 </div>
