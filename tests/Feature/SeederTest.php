@@ -13,18 +13,26 @@ use Database\Seeders\DatabaseSeeder;
 it('ejecuta el seeder principal y crea los datos de ejemplo', function () {
     $this->seed(DatabaseSeeder::class);
 
-    // 10 clientes + admin (Guali) + staff (Franco)
-    expect(User::count())->toBe(12);
+    // admin + personal + cliente + 5 clientes de relleno
+    expect(User::count())->toBe(8);
     expect(Service::count())->toBe(4);       // corte, tinte, maquillaje, barba
     expect(OpeningHour::count())->toBe(6);   // lunes a sábado
 
-    expect(User::where('email', 'guali@example.com')->exists())->toBeTrue();
-    expect(User::where('email', 'franco@example.com')->exists())->toBeTrue();
+    expect(User::where('email', 'personal@demo.com')->exists())->toBeTrue();
+    expect(User::where('email', 'cliente@demo.com')->exists())->toBeTrue();
 });
 
-it('asigna los roles correctos a las cuentas sembradas', function () {
+it('asigna los roles correctos a las cuentas de demo', function () {
     $this->seed(DatabaseSeeder::class);
 
-    expect(User::where('email', 'guali@example.com')->first()->hasRole('admin'))->toBeTrue();
-    expect(User::where('email', 'franco@example.com')->first()->hasRole('staff'))->toBeTrue();
+    expect(User::where('email', 'admin@demo.com')->first()->hasRole('admin'))->toBeTrue();
+    expect(User::where('email', 'personal@demo.com')->first()->hasRole('staff'))->toBeTrue();
+    expect(User::where('email', 'cliente@demo.com')->first()->hasRole('client'))->toBeTrue();
+});
+
+it('asigna todos los servicios al personal de demo para que pueda atender', function () {
+    $this->seed(DatabaseSeeder::class);
+
+    $staff = User::where('email', 'personal@demo.com')->first();
+    expect($staff->services()->count())->toBe(4);
 });

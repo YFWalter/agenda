@@ -65,16 +65,18 @@ php artisan serve    # en otra terminal
 
 La aplicación quedará disponible en `http://127.0.0.1:8000`.
 
-## 🔑 Datos de ejemplo
+## 🔑 Cuentas de prueba
 
-Al ejecutar `migrate --seed` se crean cuentas y datos de prueba:
+Al ejecutar `migrate --seed` se crean cuentas y datos de ejemplo. Para probar la demo, podés iniciar sesión con:
 
 | Rol | Email | Contraseña |
 |-----|-------|------------|
-| Administrador | `guali@example.com` | `password` |
-| Personal | `franco@example.com` | `password` |
+| Personal | `personal@demo.com` | `demo12345` |
+| Cliente | `cliente@demo.com` | `demo12345` |
 
-También se cargan servicios de ejemplo (corte de pelo, teñir el pelo, maquillaje, barba) con sus duraciones, los horarios de atención y varios clientes de prueba.
+> 🔒 El **administrador** existe (`admin@demo.com`) pero su contraseña **no es pública**: se toma de la variable `DEMO_ADMIN_PASSWORD` del `.env` (o es aleatoria si no se define). Así se evita el acceso de administrador en una demo pública. Para tener acceso admin, definí `DEMO_ADMIN_PASSWORD` antes de sembrar, o reestablecé la contraseña con `php artisan tinker`.
+
+También se cargan servicios de ejemplo (corte, tinte, maquillaje, barba) con sus duraciones, los horarios de atención (lunes a sábado) y varios clientes de relleno. El **personal de demo** tiene todos los servicios asignados, así que se puede reservar una cita con él de inmediato.
 
 ## 📄 Licencia
 
