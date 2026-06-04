@@ -13,8 +13,8 @@ use Database\Seeders\DatabaseSeeder;
 it('ejecuta el seeder principal y crea los datos de ejemplo', function () {
     $this->seed(DatabaseSeeder::class);
 
-    // admin + personal + cliente + 5 clientes de relleno
-    expect(User::count())->toBe(8);
+    // admin + personal + cliente
+    expect(User::count())->toBe(3);
     expect(Service::count())->toBe(4);       // corte, tinte, maquillaje, barba
     expect(OpeningHour::count())->toBe(6);   // lunes a sábado
 
