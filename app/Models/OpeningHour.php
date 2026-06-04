@@ -10,6 +10,12 @@ class OpeningHour extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'day',
+        'open',
+        'close',
+    ];
+
     protected $dayNames = [
         1 => 'Lunes',
         2 => 'Martes',
