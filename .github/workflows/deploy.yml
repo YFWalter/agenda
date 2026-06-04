@@ -24,6 +24,17 @@ jobs:
       - name: Instalar dependencias PHP
         run: composer install --no-interaction --prefer-dist
 
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Compilar assets (necesario para el manifest de Vite en las vistas)
+        run: |
+          npm ci
+          npm run build
+
       - name: Preparar entorno de pruebas
         run: |
           cp .env.example .env
