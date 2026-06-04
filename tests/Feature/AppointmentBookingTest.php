@@ -18,58 +18,8 @@ use Illuminate\Support\Facades\Notification;
  *  4. La cita debe caer dentro del horario de atención.
  */
 
-// --- Helpers locales ---
-
-function makeService(string $name = 'Corte', int $duration = 30): Service
-{
-    // Asignación directa para evitar el mass-assignment del modelo Service.
-    $service = new Service();
-    $service->name = $name;
-    $service->duration = $duration;
-    $service->save();
-
-    return $service;
-}
-
-function makeOpeningHour(int $day, string $open = '09:00:00', string $close = '18:00:00'): void
-{
-    $openingHour = new OpeningHour();
-    $openingHour->day = $day;
-    $openingHour->open = $open;
-    $openingHour->close = $close;
-    $openingHour->save();
-}
-
-/** Una franja válida en el futuro (7 días, 10:00). */
-function bookingSlot(): array
-{
-    $from = Carbon::today()->addDays(7)->setTime(10, 0);
-
-    return [$from, (clone $from)->addMinutes(30)];
-}
-
-/** Escenario completo y reservable: cliente, personal, servicio y horario. */
-function bookableScenario(): array
-{
-    [$from, $to] = bookingSlot();
-
-    $client = userWithRole('client');
-    $staff = userWithRole('staff');
-    $service = makeService();
-    $staff->services()->attach($service->id);
-    makeOpeningHour($from->dayOfWeek);
-
-    return compact('client', 'staff', 'service', 'from', 'to');
-}
-
-function bookAs($client, $staff, $service, Carbon $from)
-{
-    return test()->actingAs($client)->post('/my-schedule', [
-        'from' => ['date' => $from->format('Y-m-d'), 'time' => $from->format('H:i')],
-        'staff_user_id' => $staff->id,
-        'service_id' => $service->id,
-    ]);
-}
+// Helpers compartidos (makeService, makeOpeningHour, bookingSlot,
+// bookableScenario, bookAs) están definidos en tests/Pest.php.
 
 // --- Creación ---
 

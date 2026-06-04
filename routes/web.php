@@ -42,9 +42,7 @@ Route::middleware('auth')->group(function () {
             Route::put('/{scheduler}',[MyScheduleController::class, 'update'])->name('my-schedule.update');
             Route::delete('/{scheduler}',[MyScheduleController::class, 'destroy'])->name('my-schedule.destroy');
         });
-    });
 
-    
     Route::middleware('role:staff')->group(function () {
         Route::get('/staff-scheduler', [StaffSchedulerController::class, 'index'])
             ->name('staff-scheduler.index');
@@ -84,10 +82,9 @@ Route::middleware('auth')->group(function () {
             ->name('opening-hours.update');
     });
 
-    Route::middleware('auth')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    });
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 require __DIR__.'/auth.php';

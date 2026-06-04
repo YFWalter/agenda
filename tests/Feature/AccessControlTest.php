@@ -5,22 +5,22 @@
  *
  * Rutas y middleware (ver routes/web.php):
  *  - /my-schedule    -> auth + role:client   (invitado: redirige a login)
- *  - /staff-scheduler-> role:staff           (invitado o rol incorrecto: 403)
- *  - /users          -> role:admin           (invitado o rol incorrecto: 403)
+ *  - /staff-scheduler-> auth + role:staff    (invitado: redirige a login; rol incorrecto: 403)
+ *  - /users          -> auth + role:admin    (invitado: redirige a login; rol incorrecto: 403)
  */
 
-// --- Invitados (sin autenticar) ---
+// --- Invitados (sin autenticar) -> redirigidos al login ---
 
 it('redirige al login a los invitados que entran al área de cliente', function () {
     $this->get('/my-schedule')->assertRedirect('/login');
 });
 
-it('prohíbe a los invitados el área de personal', function () {
-    $this->get('/staff-scheduler')->assertForbidden();
+it('redirige al login a los invitados que entran al área de personal', function () {
+    $this->get('/staff-scheduler')->assertRedirect('/login');
 });
 
-it('prohíbe a los invitados el área de administración', function () {
-    $this->get('/users')->assertForbidden();
+it('redirige al login a los invitados que entran al área de administración', function () {
+    $this->get('/users')->assertRedirect('/login');
 });
 
 // --- Cliente ---
