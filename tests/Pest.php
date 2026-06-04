@@ -46,3 +46,26 @@ function something()
 {
     // ..
 }
+
+/**
+ * Asegura que existan los roles del sistema (guard "web").
+ */
+function makeRoles(): void
+{
+    foreach (['admin', 'staff', 'client'] as $role) {
+        \Spatie\Permission\Models\Role::findOrCreate($role, 'web');
+    }
+}
+
+/**
+ * Crea un usuario y le asigna el rol indicado.
+ */
+function userWithRole(string $role): \App\Models\User
+{
+    makeRoles();
+
+    $user = \App\Models\User::factory()->create();
+    $user->assignRole($role);
+
+    return $user;
+}
