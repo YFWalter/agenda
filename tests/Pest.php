@@ -46,3 +46,83 @@ function something()
 {
     // ..
 }
+
+/**
+ * Asegura que existan los roles del sistema (guard "web").
+ */
+function makeRoles(): void
+{
+    foreach (['admin', 'staff', 'client'] as $role) {
+        \Spatie\Permission\Models\Role::findOrCreate($role, 'web');
+    }
+}
+
+/**
+ * Crea un usuario y le asigna el rol indicado.
+ */
+function userWithRole(string $role): \App\Models\User
+{
+    makeRoles();
+
+    $user = \App\Models\User::factory()->create();
+    $user->assignRole($role);
+
+    return $user;
+}
+
+/**
+ * Crea un servicio (asignación directa para evitar el mass-assignment).
+ */
+function makeService(string $name = 'Corte', int $duration = 30): \App\Models\Service
+{
+    $service = new \App\Models\Service();
+    $service->name = $name;
+    $service->duration = $duration;
+    $service->save();
+
+    return $service;
+}
+
+/**
+ * Crea un horario de atención para un día concreto.
+ */
+function makeOpeningHour(int $day, string $open = '09:00:00', string $close = '18:00:00'): void
+{
+    $openingHour = new \App\Models\OpeningHour();
+    $openingHour->day = $day;
+    $openingHour->open = $open;
+    $openingHour->close = $close;
+    $openingHour->save();
+}
+
+/** Una franja válida en el futuro (7 días, 10:00). */
+function bookingSlot(): array
+{
+    $from = \Carbon\Carbon::today()->addDays(7)->setTime(10, 0);
+
+    return [$from, (clone $from)->addMinutes(30)];
+}
+
+/** Escenario completo y reservable: cliente, personal, servicio y horario. */
+function bookableScenario(): array
+{
+    [$from, $to] = bookingSlot();
+
+    $client = userWithRole('client');
+    $staff = userWithRole('staff');
+    $service = makeService();
+    $staff->services()->attach($service->id);
+    makeOpeningHour($from->dayOfWeek);
+
+    return compact('client', 'staff', 'service', 'from', 'to');
+}
+
+/** Realiza una reserva como cliente. */
+function bookAs($client, $staff, $service, \Carbon\Carbon $from)
+{
+    return test()->actingAs($client)->post('/my-schedule', [
+        'from' => ['date' => $from->format('Y-m-d'), 'time' => $from->format('H:i')],
+        'staff_user_id' => $staff->id,
+        'service_id' => $service->id,
+    ]);
+}

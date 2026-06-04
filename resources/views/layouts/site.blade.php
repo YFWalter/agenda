@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>
-      Tailwind Starter Template - Landing Page Template: Tailwind Toolbox
+      MiAgenda - Reserva tu cita online
     </title>
-    <meta name="description" content="Simple landind page" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
+    <meta name="description" content="Reserva tus citas online en segundos: elige servicio, día y hora según la disponibilidad real del salón." />
+    <meta name="keywords" content="reserva de citas, agenda online, peluquería, salón de belleza, barbería" />
+    <meta name="author" content="MiAgenda" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -20,12 +20,18 @@
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
       .gradient {
-        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+        background: linear-gradient(90deg,  #36d1dc 0, #5b86e5 100%);
       }
     </style>
   </head>
   <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
-    
+
+    <!-- Barra de demostración -->
+    <div class="fixed top-0 left-0 w-full z-40 h-8 flex items-center justify-center px-4 text-center text-xs sm:text-sm bg-gray-900 text-white">
+      <span class="font-semibold tracking-wide">Versión demostrativa</span>
+      <span class="hidden sm:inline">&nbsp;· proyecto funcional con datos de ejemplo</span>
+    </div>
+
     @include('layouts.navigation-site')
 
     {{ $slot }}
@@ -35,74 +41,54 @@
       <div class="container mx-auto px-8">
         <div class="w-full flex flex-col md:flex-row py-6">
           <div class="flex-1 mb-6 text-black">
-            <a class="text-pink-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
-              <!--Icon from: http://www.potlabicons.com/ -->
-              <svg class="h-8 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.005 512.005">
-                <rect fill="#2a2a31" x="16.539" y="425.626" width="479.767" height="50.502" transform="matrix(1,0,0,1,0,0)" />
-                <path
-                  class="plane-take-off"
-                  d=" M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "
-                />
+            <a class="text-gray-800 no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="{{ url('/') }}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 inline align-middle" width="32" height="32" fill="none" viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="16" rx="2.5" stroke="#5b86e5" stroke-width="1.8" />
+                <path d="M3 9h18" stroke="#5b86e5" stroke-width="1.8" />
+                <path d="M8 3v3M16 3v3" stroke="#36d1dc" stroke-width="1.8" stroke-linecap="round" />
+                <path d="M9 14.5l2 2 4-4" stroke="#36d1dc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              LANDING
+              MiAgenda
             </a>
           </div>
           <div class="flex-1">
-            <p class="uppercase text-gray-500 md:mb-6">Links</p>
+            <p class="uppercase text-gray-500 md:mb-6">MiAgenda</p>
             <ul class="list-reset mb-6">
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">FAQ</a>
+                <a href="#servicios" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Servicios</a>
               </li>
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Help</a>
-              </li>
-              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Support</a>
+                <a href="{{ url('/about') }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Acerca de</a>
               </li>
             </ul>
           </div>
           <div class="flex-1">
-            <p class="uppercase text-gray-500 md:mb-6">Legal</p>
+            <p class="uppercase text-gray-500 md:mb-6">Cuenta</p>
             <ul class="list-reset mb-6">
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Terms</a>
+                <a href="{{ url('/login') }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Iniciar sesión</a>
               </li>
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Privacy</a>
+                <a href="{{ url('/register') }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Regístrate</a>
               </li>
             </ul>
           </div>
           <div class="flex-1">
-            <p class="uppercase text-gray-500 md:mb-6">Social</p>
+            <p class="uppercase text-gray-500 md:mb-6">Proyecto</p>
             <ul class="list-reset mb-6">
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Facebook</a>
+                <a href="https://github.com/YFWalter/agenda" target="_blank" rel="noopener" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Código en GitHub</a>
               </li>
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>
-              </li>
-              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>
-              </li>
-            </ul>
-          </div>
-          <div class="flex-1">
-            <p class="uppercase text-gray-500 md:mb-6">Company</p>
-            <ul class="list-reset mb-6">
-              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Official Blog</a>
-              </li>
-              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">About Us</a>
-              </li>
-              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Contact</a>
+                <a href="{{ url('/about') }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Sobre la demo</a>
               </li>
             </ul>
           </div>
         </div>
+        <div class="border-t border-gray-200 py-4 text-center text-gray-500 text-sm">
+          &copy; {{ date('Y') }} MiAgenda · Versión demostrativa con datos de ejemplo.
+        </div>
       </div>
-      <a href="https://www.freepik.com/free-photos-vectors/background" class="text-gray-500">Background vector created by freepik - www.freepik.com</a>
     </footer>
     <!-- jQuery if you need it
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -111,7 +97,7 @@
       var scrollpos = window.scrollY;
       var header = document.getElementById("header");
       var navcontent = document.getElementById("nav-content");
-      var navaction = document.getElementById("navAction");
+      var navactions = document.querySelectorAll(".navAction");
       var brandname = document.getElementById("brandname");
       var toToggle = document.querySelectorAll(".toggleColour");
 
@@ -121,10 +107,12 @@
 
         if (scrollpos > 10) {
           header.classList.add("bg-white");
-          navaction.classList.remove("bg-white");
-          navaction.classList.add("gradient");
-          navaction.classList.remove("text-gray-800");
-          navaction.classList.add("text-white");
+          navactions.forEach(function (navaction) {
+            navaction.classList.remove("bg-white");
+            navaction.classList.add("gradient");
+            navaction.classList.remove("text-gray-800");
+            navaction.classList.add("text-white");
+          });
           //Use to switch toggleColour colours
           for (var i = 0; i < toToggle.length; i++) {
             toToggle[i].classList.add("text-gray-800");
@@ -135,10 +123,12 @@
           navcontent.classList.add("bg-white");
         } else {
           header.classList.remove("bg-white");
-          navaction.classList.remove("gradient");
-          navaction.classList.add("bg-white");
-          navaction.classList.remove("text-white");
-          navaction.classList.add("text-gray-800");
+          navactions.forEach(function (navaction) {
+            navaction.classList.remove("gradient");
+            navaction.classList.add("bg-white");
+            navaction.classList.remove("text-white");
+            navaction.classList.add("text-gray-800");
+          });
           //Use to switch toggleColour colours
           for (var i = 0; i < toToggle.length; i++) {
             toToggle[i].classList.add("text-white");

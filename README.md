@@ -1,21 +1,81 @@
-# Agenda
+# MiAgenda
 
-## Tipos de usuario
+Sistema de **reserva de citas online** para un salón de belleza / peluquería, construido con Laravel. Los clientes eligen un servicio, un profesional y un horario disponible, y la cita se reserva con la duración exacta del servicio dentro del horario de atención del negocio.
 
-1. Cliente (reserva citas en la agenda, puede registrarse por si mismo en el sitio web)
-2. Administrador (tiene acceso a todas las funcionalidades de administración del sistema backoffice. Administrador del negocio.)
-3. Staff (tiene acceso limitado a las funcionalidades del sistema backoffice, ej.. ver las reservaciones que debe atender)
+> ⚠️ **Proyecto demostrativo.** Es una aplicación completamente funcional, pero los datos que incluye son de ejemplo: no corresponde a un negocio real.
 
-## Agenda
+---
 
-1. Las citas deben tener un tiempo de duración. Ej: 30 min, 60 min, 90 min.
-2. El tiempo de duración de una cita está determinada por el tipo de servicio para el cual se haya reservado.
-3. Cada reservación está relacionada con un miembro del personal que es quien atenderá la cita. el cliente puede elegir al miembro del personal con quien desea reservar la cita.
-4. El administrador del sistema puede cancelar y reagendar citas. El staff puede cancelar y reagendar citas so el administrador le ha dado permiso para hacerlo.
+## ✨ Características
 
-## Personal y servicios
+- Reserva de citas eligiendo **servicio**, **profesional** y **franja horaria** disponible.
+- Disponibilidad calculada en tiempo real según los **horarios de atención** y las citas ya reservadas.
+- Cada servicio tiene una **duración** propia, que determina cuánto ocupa la cita.
+- Gestión de citas: ver, reprogramar y cancelar.
+- **Roles** con distintos niveles de acceso (cliente, personal, administrador).
+- Autenticación de usuarios (registro, login, recuperación de contraseña) con Laravel Breeze.
 
-1. El personal son los profesionales que atenderán  las citas que los clientes hayan reservado. son usuarios del sistema tipo **staff**.
-2. El número de citas que la agenda puede contener depende de la cantidad de personal disponible y el horario de atención que haya establecido el administrador.
-3. Los **servicios** son el tipo de atención que se dará al cliente. Ej: consulta con médico general, tinturado de cabello.
-4. El administrador del sistema crea/edita/elimina servicios. A cada servicio se le asigna un tiempo de duración. Se relaciona servicios con los usuarios del **staff** que pueden brindar ese servicio. Ej. un médico general no debería poder brindar un servicio de psicología.
+## 👥 Roles de usuario
+
+| Rol | Qué puede hacer |
+|-----|-----------------|
+| **Cliente** | Se registra por su cuenta, reserva citas y gestiona (reprograma/cancela) las suyas. |
+| **Personal (staff)** | Consulta y gestiona su propia agenda de citas, según los servicios que tiene asignados. |
+| **Administrador** | Administra usuarios, servicios y horarios de atención; puede reagendar/cancelar citas e impersonar cuentas para dar soporte. |
+
+> Los **servicios** (ej.: corte de pelo, tinte) se relacionan con el personal que puede brindarlos: un profesional solo aparece disponible para los servicios que tiene asignados.
+
+## 🛠️ Tecnologías
+
+- **Laravel 10** (PHP 8.1+)
+- **Blade** + **Tailwind CSS** + **Alpine.js**
+- **Vite** para los assets
+- **Laravel Breeze** (autenticación) · **Laravel Sanctum**
+- **spatie/laravel-permission** (roles y permisos)
+
+## 📋 Requisitos
+
+- PHP 8.1 o superior y [Composer](https://getcomposer.org/)
+- Node.js y npm
+- Una base de datos (MySQL por defecto)
+
+## 🚀 Instalación
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/YFWalter/agenda.git
+cd agenda
+
+# 2. Instalar dependencias
+composer install
+npm install
+
+# 3. Configurar el entorno
+cp .env.example .env
+php artisan key:generate
+# Edita .env con los datos de tu base de datos (DB_DATABASE, DB_USERNAME, DB_PASSWORD)
+
+# 4. Migrar y cargar datos de ejemplo
+php artisan migrate --seed
+
+# 5. Compilar assets y levantar el servidor
+npm run dev          # en una terminal (o `npm run build` para producción)
+php artisan serve    # en otra terminal
+```
+
+La aplicación quedará disponible en `http://127.0.0.1:8000`.
+
+## 🔑 Datos de ejemplo
+
+Al ejecutar `migrate --seed` se crean cuentas y datos de prueba:
+
+| Rol | Email | Contraseña |
+|-----|-------|------------|
+| Administrador | `guali@example.com` | `password` |
+| Personal | `franco@example.com` | `password` |
+
+También se cargan servicios de ejemplo (corte de pelo, teñir el pelo, maquillaje, barba) con sus duraciones, los horarios de atención y varios clientes de prueba.
+
+## 📄 Licencia
+
+Publicado bajo la licencia [MIT](https://opensource.org/licenses/MIT).
