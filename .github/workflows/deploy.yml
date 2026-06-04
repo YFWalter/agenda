@@ -1,0 +1,91 @@
+name: Tests y Deploy a producción
+
+# Cuándo se ejecuta: en cada push a master, o manualmente desde la pestaña Actions.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  # 1) Corre la suite de tests. Si algo falla, el deploy no se ejecuta.
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_sqlite, sqlite3, mbstring
+
+      - name: Instalar dependencias PHP
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Preparar entorno de pruebas
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Ejecutar tests
+        run: php artisan test
+
+  # 2) Compila assets y despliega al servidor por SSH.
+  deploy:
+    name: Deploy
+    needs: tests          # solo corre si 'tests' terminó OK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Compilar assets (npm run build)
+        run: |
+          npm ci
+          npm run build
+
+      - name: Actualizar el código en el servidor
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.REMOTE_APP }}
+            git fetch origin master
+            git reset --hard origin/master
+            rm -rf public/build
+
+      - name: Subir los assets compilados a la app
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "public/build"
+          target: ${{ secrets.REMOTE_APP }}/public
+          strip_components: 1
+
+      - name: Sincronizar build al docroot y limpiar cachés
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.REMOTE_APP }}
+            rm -rf "${{ secrets.REMOTE_BUILD }}"
+            cp -r public/build "${{ secrets.REMOTE_BUILD }}"
+            php artisan migrate --force
+            php artisan optimize:clear
