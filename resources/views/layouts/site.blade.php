@@ -55,7 +55,7 @@
             <p class="uppercase text-gray-500 md:mb-6">MiAgenda</p>
             <ul class="list-reset mb-6">
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                <a href="#servicios" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Servicios</a>
+                <a href="{{ url('/') }}#servicios" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Servicios</a>
               </li>
               <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a href="{{ url('/about') }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Acerca de</a>
@@ -87,6 +87,12 @@
         </div>
         <div class="border-t border-gray-200 py-4 text-center text-gray-500 text-sm">
           &copy; {{ date('Y') }} MiAgenda · Versión demostrativa con datos de ejemplo.
+          <span class="block mt-2 text-gray-400 text-xs">
+            Diseño y desarrollo web por
+            <a href="mailto:yanez.walt@gmail.com" class="hover:text-pink-500 transition-colors">Walter Yañez</a>
+            <span class="mx-1">·</span>
+            <a href="https://yfwalter.github.io/portfolio/" target="_blank" rel="noopener noreferrer" title="Ver portfolio" class="hover:text-pink-500 transition-colors">Portfolio</a>
+          </span>
         </div>
       </div>
     </footer>
