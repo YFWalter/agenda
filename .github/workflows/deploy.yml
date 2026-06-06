@@ -63,40 +63,30 @@ jobs:
           npm ci
           npm run build
 
-      - name: Actualizar el código en el servidor
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ${{ secrets.REMOTE_APP }}
-            git fetch origin master
-            git reset --hard origin/master
-            rm -rf public/build
+      - name: Preparar la clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
 
-      - name: Subir los assets compilados a la app
-        uses: appleboy/scp-action@v0.1.7
+      - name: Desplegar al servidor (con reintentos)
+        uses: nick-fields/retry@v3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "public/build"
-          target: ${{ secrets.REMOTE_APP }}/public
-          strip_components: 1
+          timeout_minutes: 8
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: |
+            SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=60 -i ~/.ssh/deploy_key"
+            PORT="${{ secrets.SSH_PORT }}"
+            REMOTE="${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}"
+            APP="${{ secrets.REMOTE_APP }}"
+            BUILD="${{ secrets.REMOTE_BUILD }}"
 
-      - name: Sincronizar build al docroot y limpiar cachés
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ${{ secrets.REMOTE_APP }}
-            rm -rf "${{ secrets.REMOTE_BUILD }}"
-            cp -r public/build "${{ secrets.REMOTE_BUILD }}"
-            php artisan migrate --force
-            php artisan optimize:clear
+            echo "==> 1/3 Actualizando código en el servidor"
+            ssh $SSH_OPTS -p "$PORT" "$REMOTE" "cd '$APP' && git fetch origin master && git reset --hard origin/master && rm -rf public/build"
+
+            echo "==> 2/3 Subiendo los assets compilados"
+            scp $SSH_OPTS -P "$PORT" -r public/build "$REMOTE:$APP/public/"
+
+            echo "==> 3/3 Sincronizando build al docroot y migrando"
+            ssh $SSH_OPTS -p "$PORT" "$REMOTE" "cd '$APP' && rm -rf '$BUILD' && cp -r public/build '$BUILD' && php artisan migrate --force && php artisan optimize:clear"
